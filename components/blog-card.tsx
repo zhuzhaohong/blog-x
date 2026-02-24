@@ -31,6 +31,9 @@ export function BlogCard({
   href = '#',
   className,
 }: BlogCardProps) {
+  const imageSrc = image && image.trim() ? image : '/images/hero-writing.jpg'
+  const isExternal = imageSrc.startsWith('http://') || imageSrc.startsWith('https://')
+
   const content = (
     <Card
       className={cn(
@@ -40,9 +43,10 @@ export function BlogCard({
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
-          src={image}
+          src={imageSrc}
           alt={title}
           fill
+          unoptimized={isExternal}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
         />

@@ -13,6 +13,11 @@ export async function getBlogs() {
     .order('created_at', { ascending: false })
 
   if (error) {
+    // Handle aborted/terminated requests (e.g. user navigated away, RSC cancelled)
+    const msg = error?.message ?? String(error)
+    if (msg === 'terminated' || msg.includes('aborted') || msg.includes('terminated')) {
+      return []
+    }
     throw new Error(`Failed to fetch blogs: ${error.message}`)
   }
 
@@ -32,6 +37,11 @@ export async function getBlogBySlug(slug: string) {
     if (error.code === 'PGRST116') {
       return null
     }
+    // Handle aborted/terminated requests (e.g. user navigated away, RSC cancelled)
+    const msg = error?.message ?? String(error)
+    if (msg === 'terminated' || msg.includes('aborted') || msg.includes('terminated')) {
+      return null
+    }
     throw new Error(`Failed to fetch blog: ${error.message}`)
   }
 
@@ -49,6 +59,11 @@ export async function getBlogById(id: number) {
 
   if (error) {
     if (error.code === 'PGRST116') {
+      return null
+    }
+    // Handle aborted/terminated requests (e.g. user navigated away, RSC cancelled)
+    const msg = error?.message ?? String(error)
+    if (msg === 'terminated' || msg.includes('aborted') || msg.includes('terminated')) {
       return null
     }
     throw new Error(`Failed to fetch blog: ${error.message}`)
