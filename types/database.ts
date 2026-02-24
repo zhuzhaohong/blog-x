@@ -37,6 +37,41 @@ export interface Database {
           email?: string;
         };
       };
+      blogs: {
+        Row: {
+          id: number;
+          title: string;
+          slug: string;
+          subtitle: string | null;
+          image: string | null;
+          content: string | null;
+          author: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          title: string;
+          slug?: string;
+          subtitle?: string | null;
+          image?: string | null;
+          content?: string | null;
+          author: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          title?: string;
+          slug?: string;
+          subtitle?: string | null;
+          image?: string | null;
+          content?: string | null;
+          author?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
